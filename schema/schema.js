@@ -1,5 +1,8 @@
 const graphql = require('graphql');
+
 const _ = require('lodash');
+const User = require('../models/user');
+const Company = require('../models/company');
 
 const {
     GraphQLObjectType,
@@ -8,18 +11,20 @@ const {
     GraphQLSchema
 } = graphql;
 
-const users =[
-    {id:'45',firstname:'rehan',age:56},
-    {id:'5',firstname:'ahmed',age:6},
-    {id:'455',firstname:'syed',age:5},
-    {id:'1',firstname:'syed',age:5},
-];
+// const users =[
+//     {id:'45',firstname:'rehan',age:56},
+//     {id:'5',firstname:'ahmed',age:6},
+//     {id:'455',firstname:'syed',age:5},
+//     {id:'1',firstname:'syed',age:5},
+// ];
 
-const company =[
-    {id:'45',tname:'wfs22423rehan',description:'dsfgbdfbgsx'},
-    {id:'5',name:'134234ahmed',description:'sgdfg segdrg'},
+
+
+// const company =[
+//     {id:'45',name:'wfs22423rehan',description:'dsfgbdfbgsx'},
+//     {id:'5',name:'134234ahmed',description:'sgdfg segdrg'},
     
-];
+// ];
 
 
 const UserType = new GraphQLObjectType({
@@ -69,6 +74,28 @@ const RootQuery = new GraphQLObjectType({
     }
 });
 
+const Mutation = new GraphQLObjectType({
+    name:'Mutation',
+    fields:{
+        addUser:{
+            type:UserType,
+            args:{
+                firstname:{type:GraphQLString},
+                age:{type:GraphQLInt}
+            },
+            resolve(parentValue,args){
+                let abc = new User({
+                    firstname:args.firstname,
+                    age:args.age
+                });
+                return abc.save()
+            }
+
+        }
+    }
+})
+
 module.exports= new GraphQLSchema({
-    query:RootQuery
+    query:RootQuery,
+    mutation:Mutation
 });
