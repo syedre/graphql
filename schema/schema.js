@@ -8,7 +8,8 @@ const {
     GraphQLObjectType,
     GraphQLString,
     GraphQLInt,
-    GraphQLSchema
+    GraphQLSchema,GraphQLList
+
 } = graphql;
 
 // const users =[
@@ -29,13 +30,13 @@ const {
 
 const UserType = new GraphQLObjectType({
     name:'User',
-    fields:{
+    fields:()=>({
         id:{type:GraphQLString},
         firstname:{type:GraphQLString},
         age:{type:GraphQLInt},
         
 
-    }
+    })
 });
 
 const CompanyType = new GraphQLObjectType({
@@ -55,9 +56,11 @@ const RootQuery = new GraphQLObjectType({
     fields:{
         user:{
             type:UserType,
+            // args:{id:{type:GraphQLString}},
             args:{id:{type:GraphQLString}},
             resolve(parentValue,args){
-                return _.find(users, { id: args.id });
+                return User.findById(args.id );
+                // return User.find({});
 
             }
         },
@@ -69,6 +72,14 @@ const RootQuery = new GraphQLObjectType({
 
             }
 
+        },
+        abcd:{
+            type: new GraphQLList(UserType),
+            resolve(parentValue,args){
+                return User.find({});
+            }
+
+            
         }
 
     }
