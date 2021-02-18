@@ -14,7 +14,7 @@ app.use(cors());
 mongoose.connect('mongodb+srv://Rehan:Rehan12345@cluster0.xjga2.mongodb.net/Project0?retryWrites=true&w=majority',
 {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.connection.once('open',()=>{
-    console.log('coonection made');
+    console.log(' database coonected');
 });
 
 // mongodb+srv://Rehan:Rehan12345@cluster0.xjga2.mongodb.net/Project0?retryWrites=true&w=majority
@@ -25,6 +25,6 @@ app.use('/graphql', expressGraphQL({
 }))
 
 app.listen(4000,() => {
-    console.log('losuhdjs');
+    console.log('listening');
 
 });
